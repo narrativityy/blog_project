@@ -72,7 +72,15 @@ module.exports.registerUser = (req, res) => {
 
             User.create(req.body)
                 .then(newlyCreatedUser => {
-                    res.status(200).json( { message: "Registration successful" } )
+                    const userId = newlyCreatedUser._id.toString();
+
+                    res.cookie('userId', userId, {
+                        httpOnly: false,
+                        secure: false,
+                        maxAge: 24 * 60 * 60 * 1000 // Cookie expires in 1 day
+                    });
+
+                    return res.status(200).json({ message: "Registration successful", userId: userId });
                 })
                 .catch((err) => {
                     res.status(400).json(err)
@@ -95,7 +103,17 @@ module.exports.loginUser = (req, res) => {
             if (!isValidPassword) {
                 return res.status(400).json({ message: "Incorrect credentials" });
             }
-            res.status(200).json({ message: "Login successful" });
+
+            const userId = user._id.toString();
+
+            res.cookie('userId', userId, {
+                httpOnly: false,
+                secure: false,
+                maxAge: 24 * 60 * 60 * 1000 // Cookie expires in 1 day
+            });
+
+
+            return res.status(200).json({ message: "Login successful", userId: userId });
         })
         .catch(err => {
             res.status(400).json(err);
