@@ -95,7 +95,7 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="w-full py-2 px-4 bg-teal-700 text-white font-semibold rounded-md shadow hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal  -500 focus:ring-offset-2"
           >
             Submit
           </button>
@@ -110,7 +110,7 @@ const Register = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Already have an account?{' '}
-            <Link to="/login" className="text-indigo-600 hover:text-indigo-800">
+            <Link to="/login" className="text-teal-600 hover:text-teal-800">
               Login
             </Link>
           </p>
