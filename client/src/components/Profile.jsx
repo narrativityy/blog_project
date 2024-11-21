@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Axios from 'axios'
+import Navbar from './Navbar.jsx'
 
 const Profile = () => {
 
@@ -48,8 +49,9 @@ const Profile = () => {
 
   return (
     loaded ? 
-    <div className='text-center'>
-      <div className='flex justify-center items-center p-4 text-center gap-4'>
+    <div className='text-center p-4'>
+      <Navbar />
+      <div className='flex justify-center items-center text-center gap-4'>
         <div>
           <h3>My Profile</h3>
           <form className='' onSubmit={(e) => submitHandler(e)}>
@@ -75,7 +77,7 @@ const Profile = () => {
         </div>
       </div>
       <button onClick={(e) => logoutHandler(e)}>Logout</button>
-    </div> : <p>loading</p> 
+    </div> : <p className='text-center text-2xl mt-60'>loading...</p> 
   )
 }
 
