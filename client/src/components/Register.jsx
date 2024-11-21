@@ -30,7 +30,10 @@ const Register = () => {
 
     Axios.post('http://localhost:8001/api/users/register', {username, email, passwordHash: password})
       .then(res => console.log(res))
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+        setErrors([err.response.data.message])
+      })
   }
 
   return (
