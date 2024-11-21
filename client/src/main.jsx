@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
 import Dashboard from './components/Dashboard.jsx'
+import Profile from './components/Profile.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={Cookies.get('userId') ? <Navigate to="/dashboard" /> : <Register />} />
         <Route path="/login" element={Cookies.get('userId') ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path='/dashboard' element={Cookies.get('userId') ? <Dashboard /> : <Navigate to="/login" />} />
+        <Route path='/profile' element={Cookies.get('userId') ? <Profile /> : <Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
