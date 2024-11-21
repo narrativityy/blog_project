@@ -10,7 +10,10 @@ require("./config/config");
 app.use(cookieParser())
 app.use(express.json(), express.urlencoded({ extended: true }), cors({credentials: true, origin: 'http://localhost:5173'}));
 
-const AllMyTemplateRoutes = require("./routes/user-routes");
-AllMyTemplateRoutes(app);
+const AllMyUserRoutes = require("./routes/user-routes");
+AllMyUserRoutes(app);
+
+const PostRoutes = require("./routes/post-routes");
+PostRoutes(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`) );
