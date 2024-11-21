@@ -41,14 +41,38 @@ module.exports.createNewUser = (req, res) => {
         });}
  
 module.exports.updateExistingUser = (req, res) => {
-    User.findOneAndUpdate(
-        { _id: req.params.id },
-        req.body,
-        { new: true, runValidators: true }
-    )
-        .then(updatedUser => {
-            res.json(updatedUser)
-        })
+    const { username, email } = req.body
+    User.findOne({ username })
+        .then(user => {
+            if (user && user._id.toString() !== req.params.id) {
+                return res.status(400).json({ message: "User already exists" });
+            }
+            User.findOne({ email })
+                .then(user => {
+                    if (user && user._id.toString() !== req.params.id) {
+                        return res.status(400).json({ message: "Email already exists" });
+                    }
+                    User.findOneAndUpdate(
+                        { _id: req.params.id },
+                        req.body,
+                        { new: true, runValidators: true }
+                    )
+                        .then(updatedUser => {
+                            res.cookie('username', updatedUser.username, {
+                                httpOnly: false,
+                                secure: false,
+                                maxAge: 24 * 60 * 60 * 1000 // Cookie expires in 1 day
+                            });
+                            res.json(updatedUser)
+                        })
+                        .catch((err) => {
+                            res.json(err)
+                        });
+                })
+                .catch((err) => {
+                    res.json(err)
+                })
+            })
         .catch((err) => {
             res.json(err)
         });}
