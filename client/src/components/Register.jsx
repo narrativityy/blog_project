@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
+
+  const navigate = useNavigate()
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -28,8 +31,11 @@ const Register = () => {
       return
     }
 
-    Axios.post('http://localhost:8001/api/users/register', {username, email, passwordHash: password})
-      .then(res => console.log(res))
+    Axios.post('http://localhost:8001/api/users/register', {username, email, passwordHash: password}, {withCredentials: true})
+      .then(res => {
+        console.log(res)
+        navigate('/dashboard')
+      })
       .catch(err => {
         console.log(err)
         setErrors([err.response.data.message])

@@ -12,9 +12,8 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    Axios.post('http://localhost:8001/api/users/login', {username, username, passwordHash: password})
-      .then(res => {
-        console.log(res)
+    Axios.post('http://localhost:8001/api/users/login', {username, passwordHash: password}, {withCredentials: true})
+      .then(async res => {
         navigate('/dashboard')
       })
       .catch(err => {
