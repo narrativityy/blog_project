@@ -35,6 +35,7 @@ const Register = () => {
       .then(res => {
         console.log(res)
         navigate('/dashboard')
+        window.location.reload();
       })
       .catch(err => {
         console.log(err)

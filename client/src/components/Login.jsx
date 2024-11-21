@@ -15,6 +15,7 @@ const Login = () => {
     Axios.post('http://localhost:8001/api/users/login', {username, passwordHash: password}, {withCredentials: true})
       .then(async res => {
         navigate('/dashboard')
+        window.location.reload();
       })
       .catch(err => {
         console.log(err)
