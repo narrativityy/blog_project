@@ -147,3 +147,9 @@ module.exports.loginUser = (req, res) => {
         .catch(err => {
             res.status(400).json(err);
         });}
+
+module.exports.logoutUser = (req, res) => {
+    res.clearCookie('userId');
+    res.clearCookie('username');
+    return res.status(200).json({ message: "Logout successful" });
+}
