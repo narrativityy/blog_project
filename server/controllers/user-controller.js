@@ -112,6 +112,11 @@ module.exports.loginUser = (req, res) => {
                 maxAge: 24 * 60 * 60 * 1000 // Cookie expires in 1 day
             });
 
+            res.cookie('username', user.username, {
+                httpOnly: false,
+                secure: false,
+                maxAge: 24 * 60 * 60 * 1000 // Cookie expires in 1 day
+            });
 
             return res.status(200).json({ message: "Login successful", userId: userId });
         })
