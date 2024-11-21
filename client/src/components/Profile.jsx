@@ -36,16 +36,6 @@ const Profile = () => {
       })
   }
 
-  const logoutHandler = () => {
-    Axios.post('http://localhost:8001/api/users/logout', {}, {withCredentials: true})
-      .then(res => {
-        navigate('/')
-        window.location.reload();
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
 
   return (
     loaded ? 
@@ -76,7 +66,6 @@ const Profile = () => {
           {errors.map((err, index) => <p className='text-red-600' key={index}>{err}</p>)}
         </div>
       </div>
-      <button onClick={(e) => logoutHandler(e)}>Logout</button>
     </div> : <p className='text-center text-2xl mt-60'>loading...</p> 
   )
 }
