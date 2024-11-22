@@ -10,6 +10,14 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    likes: {
+        type: Array,
+        default: []
+    },
+    comments: {
+        type: Array,
+        default: []
+    },
     user: {
         type: Object,
         required: true
