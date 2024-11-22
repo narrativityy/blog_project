@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa6";
+import Axios from 'axios';
 
 const Post = ({ post, index, isDashboard }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(post.likes.length);
+
+  useEffect(() => {
+    if (post.likes.includes(Cookies.get('username'))) {
+      setIsLiked(true);
+    }
+  }, []);
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
@@ -32,6 +43,19 @@ const Post = ({ post, index, isDashboard }) => {
     return 'just now';
   };
 
+  const handleLike = (e) => {
+    e.preventDefault()
+    Axios.post('http://localhost:8001/api/posts/like', { postId: post._id, username: Cookies.get('username') }, { withCredentials: true })
+      .then(res => {
+        setIsLiked(!isLiked)
+        isLiked ? setLikes(likes - 1) : setLikes(likes + 1)
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   const isLongText = post.body.length > 100;
   const displayedText = isLongText ? isExpanded ? post.body : `${post.body.substring(0, 100)}...` : post.body;
 
@@ -52,7 +76,17 @@ const Post = ({ post, index, isDashboard }) => {
       ) : (
         <p className="text-sm text-gray-500 mt-2">By {post.user.username}</p>
       )}
-      <p className="text-sm text-gray-400 mt-1">Last updated: {timeAgo(post.updatedAt)}</p>
+      <p className="text-sm text-gray-400 mt-1">Posted {timeAgo(post.createdAt)}</p>
+      <div className='flex justify-between items-center'>
+        <form onSubmit={handleLike}>
+          <input type="hidden" name="postId" value={post._id} />
+          <input type="hidden" name="username" value={Cookies.get('username')} />
+
+          <button type="submit">{ isLiked ? <FaThumbsUp className='mt-4 text-3xl text-teal-700' /> : <FaRegThumbsUp className='mt-4 text-3xl text-teal-700' /> }</button>
+        </form>
+
+        <p className="text-sm text-gray-400 mt-3">{likes} likes</p>
+      </div>
     </div>
   );
 };
